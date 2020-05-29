@@ -3,6 +3,7 @@ package board.board.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data   //롬복의 어노테이션, setter의 경우 final이 선언되지 않은 필드에만 적용됨
 public class BoardDto {
@@ -16,6 +17,7 @@ public class BoardDto {
     private LocalDateTime createdDatetime;
     private String updaterId;
     private LocalDateTime updatedDatetime;
+    private List<BoardFileDto> fileList;
 
 }
 

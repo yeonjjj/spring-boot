@@ -19,7 +19,8 @@ public class TransactionAspect {
 
     // 트랜잭션을 설정할 때 사용되는 설정값을 상수로 선언
     private static final String AOP_TRANSACTION_METHOD_NAME="*";
-    private static final String AOP_TRANSACTION_EXPRESSION="execution(* board..service.*Impl.*(..))";
+//  private static final String AOP_TRANSACTION_EXPRESSION="execution(* board..service.*Impl.*(..))";
+    private static final String AOP_TRANSACTION_EXPRESSION="execution(* board..*..*..*(..))";
 
     @Autowired
     private PlatformTransactionManager transactionManager;
