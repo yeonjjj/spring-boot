@@ -26,6 +26,7 @@ public class BoardController {
         log.debug("openBoardList");     //debug 레벨, openBoardList라는 문자열 출력
         ModelAndView mv = new ModelAndView("/board/boardList");
         List<BoardDto> list = boardService.selectBoardList();   //비즈니스 로직 수행을 위해 메서드 호출
+    //    int i = 10/0;
         mv.addObject("list", list);     //실행된 비즈니스 로직의 결과 값을 뷰에 list라는 이름으로 저장
         return mv;
     }
