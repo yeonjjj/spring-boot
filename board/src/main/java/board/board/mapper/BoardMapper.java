@@ -3,6 +3,7 @@ package board.board.mapper;
 import board.board.dto.BoardDto;
 import board.board.dto.BoardFileDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface BoardMapper {
     void updateHitCount(int boardIdx) throws Exception;
     BoardDto selectBoardDetail(int boardIdx) throws Exception;
     List<BoardFileDto> selectBoardFileList(int boardIdx) throws Exception;
+    BoardFileDto selectBoardFileInformation(@Param("idx") int idx, @Param("boardIdx") int boardIdx);
 
     void updateBoard(BoardDto board) throws Exception;
     void deleteBoard(int boardIdx) throws Exception;
