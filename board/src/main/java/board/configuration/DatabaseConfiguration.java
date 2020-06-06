@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 //application.properties를 사용할 수 있도록 설정 파일 위치 지정
@@ -33,6 +34,12 @@ public class DatabaseConfiguration {
     @ConfigurationProperties(prefix="mybatis.configuration")
     public org.apache.ibatis.session.Configuration mybatisConfig(){
         return new org.apache.ibatis.session.Configuration();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix="spring.jpa")
+    public Properties hibernateConfig(){
+        return new Properties();
     }
 
     @Bean
