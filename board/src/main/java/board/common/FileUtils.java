@@ -1,6 +1,7 @@
 package board.common;
 
 import board.board.dto.BoardFileDto;
+import board.board.entity.BoardFileEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,6 +74,66 @@ public class FileUtils {
                     fileList.add(boardFile);
 
                     //업로드 된 파일을 새로운 이름으로 바꾸어 지정된 경로에 저장
+                    file = new File(path+"/"+newFileName);
+                    multipartFile.transferTo(file);
+                }
+            }
+        }
+        return fileList;
+    }
+
+    //JPA의 @OneToMany 어노테이션으로 연관관계가 설정되어 있으므로 게시글 번호를 따로 저장할 필요 없음
+    //→ 파라미터로 게시글 번호 받지 않음
+    public List<BoardFileEntity> parseFileInfo(MultipartHttpServletRequest
+            multipartHttpServletRequest) throws Exception{
+        if(ObjectUtils.isEmpty(multipartHttpServletRequest)){
+            return null;
+        }
+
+        List<BoardFileEntity> fileList = new ArrayList<>();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
+        ZonedDateTime current = ZonedDateTime.now();
+        String path = "images/"+current.format(format);
+        File file = new File(path);
+        if(file.exists()==false){
+            file.mkdirs();
+        }
+
+        Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+
+        String newFileName, originalFileExtension, contentType;
+
+        while(iterator.hasNext()){
+            List<MultipartFile> list = multipartHttpServletRequest.getFiles(iterator.next());
+            for(MultipartFile multipartFile : list){
+                if(multipartFile.isEmpty()==false){
+                    contentType = multipartFile.getContentType();
+                    if(ObjectUtils.isEmpty(contentType)){
+                        break;
+                    }
+                    else{
+                        if(contentType.contains("image/jpeg")){
+                            originalFileExtension=".jpg";
+                        }
+                        else if(contentType.contains("image/png")){
+                            originalFileExtension=".png";
+                        }
+                        else if(contentType.contains("image/gif")){
+                            originalFileExtension=".gif";
+                        }
+                        else{
+                            break;
+                        }
+                    }
+
+                    newFileName = Long.toString(System.nanoTime())+originalFileExtension;
+                    BoardFileEntity boardFile = new BoardFileEntity();
+                    boardFile.setFileSize(multipartFile.getSize());
+                    boardFile.setOriginalFileName(multipartFile.getOriginalFilename());
+                    boardFile.setStoredFilePath(path+"/"+newFileName);
+                    boardFile.setCreatorId("admin");
+                    fileList.add(boardFile);
+
                     file = new File(path+"/"+newFileName);
                     multipartFile.transferTo(file);
                 }
