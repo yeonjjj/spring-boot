@@ -1,6 +1,5 @@
 package com.yeonjjj.springboot.web;
 
-import com.yeonjjj.springboot.web.web.HelloController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

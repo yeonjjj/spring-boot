@@ -1,6 +1,5 @@
 package com.yeonjjj.springboot.web.dto;
 
-import com.yeonjjj.springboot.web.web.dto.HelloResponseDto;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;   // assertJ가 JUnit의 assertThat보다 편리
 
